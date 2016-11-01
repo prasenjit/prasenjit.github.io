@@ -3,7 +3,7 @@ title: Video Cortex
 description: 'Insights and Visions'
 url: 'https://adishavit.github.io'
 baseurl: '/'
-# google_analytics: 'UA-XXXXXX-X'
+google_analytics: 'UA-86671472-1'
 # disqus_shortname: 'your-disqus-name'
 
 author:
