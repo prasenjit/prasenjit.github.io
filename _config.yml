@@ -4,7 +4,7 @@ description: 'Insights and Visions'
 url: 'https://adishavit.github.io'
 baseurl: '/'
 google_analytics: 'UA-86671472-1'
-# disqus_shortname: 'your-disqus-name'
+disqus_shortname: 'video-cortex'
 
 author:
   name: 'Adi Shavit'
