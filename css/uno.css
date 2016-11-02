@@ -34,8 +34,21 @@ q:before, q:after {
 	content: none; }
 
 table {
+	text-align: left;
+	margin-bottom: 1rem;
+	width: 100%;
+	border: 1px solid #e5e5e5;
+	border-style:
 	border-collapse: collapse;
 	border-spacing: 0; }
+	td,
+	th {
+	  padding: .25rem .5rem;
+	  border: 1px solid #e5e5e5;
+	}
+	tbody tr:nth-child(odd) td,
+	tbody tr:nth-child(odd) th {
+		background-color: #f9f9f9;}
 
 body {
 	width: 100%;
@@ -991,15 +1004,15 @@ em {
 
 blockquote {
 	margin: 1em 0;
-	padding: 2em 0;
+	padding: .5em ;
 	background: #f8f8f8;
 	border: 1px solid #eeeeee;
 	border-radius: 3px;
-	font-family: "Roboto Slab", serif;
+	/*font-family: "Roboto Slab", serif;*/
 	font-weight: lighter;
 	font-style: italic;
-	font-size: 1.3em;
-	text-align: center; }
+	/*font-size: 1.3em;*/
+	 }
 	blockquote p:last-child {
 		margin-bottom: 0; }
 
