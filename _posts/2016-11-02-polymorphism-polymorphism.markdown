@@ -4,7 +4,9 @@ date:   2016-11-02
 categories: [C++]
 tags: [C++,C++17,"std::variant"]
 ---
-C++17 gives us `std::variant<>` which allows for a new form of runtime polymorphism.
+C++17 gives us `std::variant<>` which allows for a new form of runtime polymorphism.  
+
+![dog-cat](../../assets/dog-cat.jpg)
 
 #### Polymorphism
 [Polymorphism] allows manipulating different types identically when they implement the same interface.  
@@ -144,21 +146,23 @@ In fact, there is [a proposal][indirect] for a yet another type of runtime polym
 > The class template, `indirect`, confers value-like semantics on a free-store allocated	object. An `indirect<T>` may hold a an object of a class publicly derived
 from `T`, and copying the indirect will copy the object of the derived type.
 
+The `indirect<>` class template is still at the proposal stage and beyond the scope of this post.
 
+#### Summary
 
 So, what do we have:
 
 | **Where vs.<br>Semantics** | **Stack**                | **Free-Store / Heap**                            |
 |---------------------|----------------------|------------------------------|
 | **Reference**           |                      | Classic<br> - `std::unique_ptr<>`<br> - `std::shared_ptr<>` |
-| **Value**               | `std::variant<>` | `std::indirect` |
+| **Value**               | `std::variant<>` | `std::indirect<>` |
   
 or in a feature table form:
 
 | **Polymorphism**  | **Where** | **Semantics** | **Type List** | **Size** |
 |:--------------|:------|:----------|:----------|:-----------------|
 | classic       | Heap  | Reference | Open      | As concrete type |
-| `std::indirect` | Heap  | Value     | Open      | As concrete type |
+| `std::indirect<>` | Heap  | Value     | Open      | As concrete type |
 | `std::variant<>`       | Stack | Value     | Closed    | As largest type  |
 
 This idea originally posted on Twitter:
@@ -168,9 +172,9 @@ This idea originally posted on Twitter:
 - [The Polymorphism of Runtime Polymorphism](https://twitter.com/AdiShavit/status/790816806919401472)
 
 
+*If you found this post helpful, or you have more thoughts on this subject, please leave a message in the comments.*
 
-*If you found this post helpful, or you have more thought on this subject, please leave a message in the comments.*
-
+[*-- photo credit*](https://flic.kr/p/8AuoXM)
 
 [Polymorphism]: https://en.wikipedia.org/wiki/Polymorphism_(computer_science)
 [variant]: http://en.cppreference.com/w/cpp/utility/variant
