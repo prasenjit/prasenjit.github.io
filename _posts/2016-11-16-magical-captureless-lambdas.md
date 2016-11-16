@@ -13,7 +13,7 @@ Well, almost -- because *captureless* lambdas *are* magical.
 > *Like faeries, captureless lambdas are pure and magical creatures.  
 Unlike faeries, captureless lambdas can be converted to function pointers.*  
 
-Automtic function pointer conversion is very useful when interacting with C APIs that require function pointer arguments. One notorious example is [`qsort()`][qsort] (you should always prefer [`std::sort`][sort] where possible). Similarly, many C APIs require a function pointer callback.  
+Automatic function pointer conversion is very useful when interacting with C APIs that require function pointer arguments. One notorious example is [`qsort()`][qsort] (you should always prefer [`std::sort`][sort] where possible). Similarly, many C APIs require a function pointer callback.  
 
 <p style="text-align: center;">
   <img src="http://i.giphy.com/M13G8Iq8OHOZG.gif"/>
