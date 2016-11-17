@@ -21,7 +21,7 @@ Automatic function pointer conversion is very useful when interacting with C API
 
 A further magic trick that captureless lambdas can perform is to convert to a function pointer of *any* desired function [*calling convention*](https://en.wikipedia.org/wiki/Calling_convention). This may be of more interest to 32-bit Windows developers, though calling conventions are more intimiately related to the processor architecture than the OS.
 
-Calling conventions behave as part of the function signature. Given a function or function pointer of one calling convention `static_cast<>`ing it to another will not compile and using `reinterpret_cast<>` would most likely result in a crash or **Undefined Beahaviour**.
+Calling conventions behave as part of the function signature. Given a function or function pointer of one calling convention `static_cast<>`ing it to another will not compile and using `reinterpret_cast<>` would most likely result in a crash or **Undefined Behaviour**.
 
 This code does not compile (on 32-bit x86):
 
