@@ -188,15 +188,50 @@ One might consider this a sufficient fix:
 This is ok for `f1` and `f2` but default captures (`[&]` and `[=]`) will not bind the compile time constants `k2` and `k1` to a named (lvalue) variable automatically. To get that code to compile we must explicitly name the captured values:
 
 ```cpp
-    auto f3 = [k2]() { return &k2; }; // ok
-    auto f4 = [k1]() { return &k1; }; // ok
+    auto f3 = [k2]() { return &k2; }; // compiles ok, but is it?
+    auto f4 = [k1]() { return &k1; }; // compiles ok, but is it? 
 ```
 or alternatively:
 
 ```cpp
-    auto f3 = [&k2]() { return &k2; }; // ok
-    auto f4 = [&k1]() { return &k1; }; // ok
+    auto f3 = [&k2]() { return &k2; }; // compiles ok, but is it?
+    auto f4 = [&k1]() { return &k1; }; // compiles ok, but is it?
 ```
+This code compiles fine as the names are explicitly captured and thus valid within the lambda body.  
+
+--- 
+
+> ### Pop-Quiz!
+>
+>As pointed out by the astute [Jason Turner](https://twitter.com/lefticus) , there are some unrelated [subtle issues]((https://twitter.com/lefticus/status/801142776951959553)) (don't peek if you dare) with these particular *non*-captureless lambda examples:
+>
+1. What exactly are these lambdas returning? 
+2. What is the lifetime of the returned values? 
+3. What do these addresses point to? 
+4. Are they even valid and if so until when?
+5. Why are there no compiler warnings?
+>
+> This post is about *captureless* lambdas, and explaining the subtleties of these examples of *captureful-lambdas* is somewhat beyond its scope.  
+> Go crazy in the comments.  
+> If there's interest I'll write a followup post detailing this.
+
+For completeness, here's a version that does not have the subtleties mentioned above:
+
+```cpp
+auto g(const int* p) { return p ? *p : 0; }; // a function taking an address
+void f(int v)
+{       
+    const     int k1 = 1;   // a local const value - known at compile time
+    constexpr int k2 = 2;   // a local const value - known at compile time
+
+    auto f3  = [ k2]() { return g(&k2); }; 
+    auto ff3 = [&k2]() { return g(&k2); }; 
+    auto f4  = [ k1]() { return g(&k1); }; 
+    auto ff4 = [&k1]() { return g(&k1); }; 
+}
+```
+
+---
 
 ## The Mysterious ODR-Use
 The rules governing what entities are visible within a lambda (any lambda not just a captureless one) are formally known as ***ODR-Use***.  
