@@ -199,8 +199,6 @@ or alternatively:
 ```
 This code compiles fine as the names are explicitly captured and thus valid within the lambda body.  
 
---- 
-
 > ### Pop-Quiz!
 >
 >As pointed out by the astute [Jason Turner](https://twitter.com/lefticus) , there are some unrelated [subtle issues]((https://twitter.com/lefticus/status/801142776951959553)) (don't peek if you dare) with these particular *non*-captureless lambda examples:
@@ -230,8 +228,6 @@ void f(int v)
     auto ff4 = [&k1]() { return g(&k1); }; 
 }
 ```
-
----
 
 ## The Mysterious ODR-Use
 The rules governing what entities are visible within a lambda (any lambda not just a captureless one) are formally known as ***ODR-Use***.  
