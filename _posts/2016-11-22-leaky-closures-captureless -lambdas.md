@@ -201,7 +201,7 @@ This code compiles fine as the names are explicitly captured and thus valid with
 
 > ### Pop-Quiz!
 >
->As pointed out by the astute [Jason Turner](https://twitter.com/lefticus) , there are some unrelated [subtle issues]((https://twitter.com/lefticus/status/801142776951959553)) (don't peek if you dare) with these particular *non*-captureless lambda examples:
+>As pointed out by the astute [Jason Turner](https://twitter.com/lefticus) , there are some unrelated [subtle issues](https://twitter.com/lefticus/status/801142776951959553) (don't peek if you dare) with these particular *non*-captureless lambda examples:
 >
 1. What exactly are these lambdas returning? 
 2. What is the lifetime of the returned values? 
