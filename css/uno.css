@@ -1117,6 +1117,7 @@ pre {
 
 .content-wrapper__inner {
 	margin: 0 10%;
+	display:none;
 	padding: 50px 0; }
 
 .footer {
