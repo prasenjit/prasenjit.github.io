@@ -8,7 +8,7 @@ Lambdas can be made to play nicely with C callbacks.
 ![img](../../assets/telephone.jpg)
 
 Many C APIs have callback arguments in the form of function pointers.  
-Consider:  
+Consider:   
 
 ```cpp
 void nifty_thing_doer(void (*callback)(int));
@@ -213,9 +213,10 @@ To summarize, how do we create per-lambda "static" state?
 
 As usual, comments are most welcomed!
 
+<p style="text-align: center;">📞</p>
+
 *Acknowledgments:
 [banner](https://www.pexels.com/photo/black-rotary-telephone-at-top-of-gray-surface-163008/) :: 
 [Bannalia][Bannalia]*
-
  
 [Bannalia]: http://bannalia.blogspot.com/2016/07/passing-capturing-c-lambda-functions-as.html
