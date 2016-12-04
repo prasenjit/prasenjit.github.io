@@ -11,6 +11,13 @@ layout: default
 
   <section class="post">
     {{ content }}
+    <hr class="share-divider">
+    <a href="https://www.facebook.com/sharer/sharer.php?u={{ site.url }}{{ page.url}}"  title="Share on Facebook" target="_blank"><i class="icon icon-social-facebook large-icon"></i></a>
+    <a href="https://twitter.com/home?status=Check this out: {{ site.url }}{{ page.url}} @adishavit"  title="Share on Twitter" target="_blank"><i class="icon icon-social-twitter large-icon"></i></a>
+    <a href="https://plus.google.com/share?url={{ site.url }}{{ page.url}}"  title="Share on Google+" target="_blank"><i class="icon icon-social-google-plus large-icon"></i></a>
+    <a href="http://www.reddit.com/submit?url={{ site.url }}{{ page.url}}&title={{ page.title }}"  title="Share on Reddit" target="_blank"><i class="icon icon-social-reddit large-icon"></i></a>
+    <a href="https://www.linkedin.com/shareArticle?mini=true&url={{ site.url }}{{ page.url}}&title={{ page.title }}"  title="Share on LinkedIn" target="_blank"><i class="icon icon-social-linkedin large-icon"></i></a>
+    <a href="mailto:?subject={{ page.title }}&body=Hey! Please check this article out. It may be interesting for you. {{ site.url }}{{ page.url}}"  title="Share by e-mail" target="_blank"><i class="icon icon-mail large-icon"></i></a>
   </section>
   {% if page.comments != false and site.disqus_shortname %}<section id="disqus_thread"></section><!-- /#disqus_thread -->{% endif %}
 </article>
