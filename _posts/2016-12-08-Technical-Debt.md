@@ -1,7 +1,7 @@
 ---
 title:  "Technical Debt"
-categories: [C++, lamdas, technical-debt]
-tags: [C++]
+tags: [C++, lambdas, technical-debt]
+categories: [C++]
 ---
 My series on captureless lambdas generated some interesting comments (some via Twitter and Reddit). Here are some followups.  
 
