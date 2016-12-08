@@ -8,7 +8,7 @@ My series on captureless lambdas generated some interesting comments (some via T
 ![](../../assets/issue_list.jpg)
 
 ### Easy Cast
-We can convert a captureless lambdas into function pointers without explicitly specifying the cast-to type by prepending them with a `+`.
+We can convert captureless lambdas into function pointers without explicitly specifying the cast-to type by prepending them with a `+`.
 
 Consider this code (from [here](http://stackoverflow.com/questions/17822131/resolving-ambiguous-overload-on-function-pointer-and-stdfunction-for-a-lambda)):
 
