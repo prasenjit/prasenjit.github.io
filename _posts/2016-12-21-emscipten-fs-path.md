@@ -113,7 +113,7 @@ Path: <input id="path" type="text" name="firstname">
 	path_element.addEventListener("paste", get_path_info);
 </script>
 
-Newer versions of emscripten will also generate WebAssembley, which is gaining support with newer versions of most browsers. This makes the web another target platform for C++ that should not be overlooked when performance is at a premium.
+Newer versions of emscripten will also generate WebAssembly, which is gaining support with newer versions of most browsers. This makes the web another target platform for C++ that should not be overlooked when performance is at a premium.
 
 I ❤ your feedback so do use the comments below, Twitter or Reddit.
 
