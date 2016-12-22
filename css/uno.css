@@ -1695,7 +1695,7 @@ input[type="tel"] {
 		display: block;
 		margin-bottom: .4em; } }
 
-	.small-icon { font-size: 15px; }
+	.small-icon { font-size: 20px/* 15px */; }
 	.medium-icon { font-size: 30px; }
 	.large-icon { font-size: 50px; }
 
