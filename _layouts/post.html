@@ -4,7 +4,7 @@ layout: default
 <article class="post-container post-container--single">
   <header class="post-header">
     <div class="post-meta">
-      <time datetime="{{ page.date | date: "%-d %b %Y" }}" class="post-meta__date date">{{ page.date | date: "%-d %b %Y" }}</time> &#8226; <span class="post-meta__tags">on {% for tag in page.tags %}<a href="{{ site.baseurl }}tags/#{{ tag }}">{{ tag }}</a> {% endfor %}</span>
+      <time datetime="{{ page.date | date: "%-d %b %Y" }}" class="post-meta__date date">{{ page.date | date: "%-d %b %Y" }}</time> &#8226; {% include read_time.html %} &#8226;<span class="post-meta__tags">on {% for tag in page.tags %}<a href="{{ site.baseurl }}tags/#{{ tag }}">{{ tag }}</a> {% endfor %}</span>
     </div>
     <h1 class="post-title">{{ page.title }}</h1>
     <link href="https://file.myfontastic.com/n6vo44Re5QaWo8oCKShBs7/icons.css" rel="stylesheet">
@@ -17,9 +17,9 @@ layout: default
     <a href="http://www.reddit.com/submit?url={{ site.url }}{{ page.url}}&title={{ page.title }}"  title="Share on Reddit" target="_blank"><i class="icon icon-social-reddit medium-icon"></i></a>
     <a href="https://www.facebook.com/sharer/sharer.php?u={{ site.url }}{{ page.url}}"  title="Share on Facebook" target="_blank"><i class="icon icon-social-facebook medium-icon"></i></a>
     <a href="https://plus.google.com/share?url={{ site.url }}{{ page.url}}"  title="Share on Google+" target="_blank"><i class="icon icon-social-google-plus medium-icon"></i></a>
-    <a href="https://news.ycombinator.com/submitlink?u={{ site.url }}{{ page.url}}&t={{ page.title }}" target="_blank" title="Share on Hacker News"><i class="icon icon-social-hacker-news medium-icon"></i></a>   
+    <a href="https://news.ycombinator.com/submitlink?u={{ site.url }}{{ page.url}}&t={{ page.title }}" target="_blank" title="Share on Hacker News"><i class="icon icon-social-hacker-news medium-icon"></i></a>
     <a href="http://www.tumblr.com/share/link?url={{ site.url }}{{ page.url}}&name={{ page.title }}"  title="Share on Tumblr" target="_blank"><i class="icon icon-social-tumblr medium-icon"></i></a>
-    <a href="https://www.blogger.com/blog-this.g?u={{ site.url }}{{ page.url}}&n={{ page.title }}" onclick="window.open(this.href, '_blank', 'height=270,width=475'); return false;" title="Share on Blogger" target="_blank"><i class="icon icon-social-blogger medium-icon"></i></a>        
+    <a href="https://www.blogger.com/blog-this.g?u={{ site.url }}{{ page.url}}&n={{ page.title }}" onclick="window.open(this.href, '_blank', 'height=270,width=475'); return false;" title="Share on Blogger" target="_blank"><i class="icon icon-social-blogger medium-icon"></i></a>
     <a href="https://www.linkedin.com/shareArticle?mini=true&url={{ site.url }}{{ page.url}}&title={{ page.title }}"  title="Share on LinkedIn" target="_blank"><i class="icon icon-social-linkedin medium-icon"></i></a>
     <a href="mailto:?subject={{ page.title }}&body=Hey! Please check this article out. It may be interesting for you. {{ site.url }}{{ page.url}}"  title="Share by e-mail" target="_blank"><i class="icon icon-mail medium-icon"></i></a>
 
@@ -27,14 +27,14 @@ layout: default
 <!-- more social sites to share on: -->
     <a href="http://del.icio.us/save?v=5&noui&jump=close&url={{ site.url }}{{ page.url}}&title={{ page.title }}" title="Share on del.icio.us" target="_blank"><i class="icon icon-social-delicious small-icon"></i></a>
     <a href="http://service.weibo.com/share/share.php?url={{ site.url }}{{ page.url}}&title={{ page.title }}" title="分享到新浪微博" target="_blank"><i class="icon socicon-weibo small-icon"></i></a>
-    <a href="http://share.renren.com/share/buttonshare?link={{ site.url }}{{ page.url}}&title={{ page.title }}" title="分享到人人网" target="_blank"><i class="icon socicon-renren small-icon"></i></a>    
-    <a href="http://hi.baidu.com/pub/show/share?url={{ site.url }}{{ page.url}}&title={{ page.title }}" title="Share on Baidu" target="_blank"><i class="icon socicon-baidu small-icon"></i></a>       
+    <a href="http://share.renren.com/share/buttonshare?link={{ site.url }}{{ page.url}}&title={{ page.title }}" title="分享到人人网" target="_blank"><i class="icon socicon-renren small-icon"></i></a>
+    <a href="http://hi.baidu.com/pub/show/share?url={{ site.url }}{{ page.url}}&title={{ page.title }}" title="Share on Baidu" target="_blank"><i class="icon socicon-baidu small-icon"></i></a>
     <a href="http://line.me/R/msg/text/?{{ page.title }} - {{ site.url }}{{ page.url}}" title="LINE" target="_blank"><i class="icon socicon-line small-icon"></i></a>
     <a href="http://www.douban.com/recommend/?url={{ site.url }}{{ page.url}}&title={{ page.title }}" title="分享到豆瓣" target="_blank"><i class="icon socicon-douban small-icon"></i></a>
     <a href="http://vk.com/share.php?url={{ site.url }}{{ page.url}}&title={{ page.title }}" title="Публикация" target="_blank"><i class="icon socicon-vkontakte small-icon"></i></a>
     <a href="http://www.odnoklassniki.ru/dk?st.cmd=addShare&st._surl={{ site.url }}{{ page.url}}&title={{ page.title }}" title="Однокласники" target="_blank"><i class="icon socicon-odnoklassniki small-icon"></i></a>
     <a href="http://www.livejournal.com/update.bml?event={{ site.url }}{{ page.url}}&subject={{ page.title }}" title="Share on Livejournal" target="_blank"><i class="icon socicon-livejournal small-icon"></i></a>
-  
+
   </section>
   {% if page.comments != false and site.disqus_shortname %}<section id="disqus_thread"></section><!-- /#disqus_thread -->{% endif %}
 </article>

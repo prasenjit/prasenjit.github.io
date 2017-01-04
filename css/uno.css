@@ -1164,8 +1164,14 @@ hr {
 .post-meta__date {
 	margin-right: .5em; }
 
+.reading-time {
+		font-size: .8em;
+		margin-right: .5em;
+		margin-left: .5em;
+	}
+
 .post-meta__tags {
-	margin-left: .4em; }
+	margin-left: .5em; }
 
 .post-meta__author {
 	margin-left: 1.5em; }
