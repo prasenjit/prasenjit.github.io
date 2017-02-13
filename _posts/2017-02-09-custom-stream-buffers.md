@@ -24,13 +24,12 @@ I needed to get the encoding library to encode my data and write the encoded dat
 
 ```cppEncoder encoder; 
 // fill encoder with data...std::ostringstream ostr;encoder.encode(ostr);
-std::string buf_str;
-ostr.str(buf_str);device_write_callback(buf_str.c_str(), buf_str.size());
+auto buf_str = ostr.str(); // makes another COPY!device_write_callback(buf_str.c_str(), buf_str.size());
 ``` 
     
-This works, but has a major drawback: the encoder will first encode all the data into an in-memory buffer. Only after this is allocated and done, will the entire thing be written to the device. If our encoded data is very large, this can consume copious amounts of memory.
+This works, but has a major drawback: the encoder will first encode all the data into an internal *in-memory* buffer. Only after this is allocated and done, will the entire thing be written to the device. If our encoded data is very large, this can consume copious amounts of memory.  
 
-> Had I used: `std::string buf_str = ostr.str();` I would have incurred an ***additional*** copy of that giant buffer!
+To make matters worse, `ostr.str()` returns an ***additional copy*** of that giant buffer!
 
 What we'd like is to create a `std::ostream` that instead of writing to a memory buffer, directly calls the device-writer function.  
 
@@ -80,7 +79,7 @@ C++17 will bring us [*class template deduction*](http://en.cppreference.com/w/cp
 A more subtle annoyance is that there is actually no static type enforcement on the callback type. It is called `Callable` but it is only *assumed* that:
 
 1. it is a callable;
-2. it has the correct parity (number of args);
+2. it has the correct arity (number of args);
 3. it has the correct return type;
 4. all the args have the correct types.
 
