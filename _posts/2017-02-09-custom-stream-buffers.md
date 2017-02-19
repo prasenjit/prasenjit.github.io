@@ -138,6 +138,21 @@ A natural extension to this class would be to also accept a [`std::string_view`]
 
 <p style="text-align: center;">💎</p>
 
+>  **Update**  
+> In the [Feb. 2017 ISO C++ mailing](http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2017/#mailing2017-02), [Peter Sommerlad](https://twitter.com/PeterSommerlad) proposes:  
+> [P0408R1: Efficient Access to basic stringbuf's Buffer](http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2017/p0408r1.pdf).  
+> 
+> From the paper:  
+> Streams have been the oldest part of the C++ standard library and their specification
+doesn’t take into account many things introduced since C++11. One of the oversights is
+that there is no non-copying access to the internal buffer of a `basic_stringbuf` which
+makes at least the obtaining of the output results from an `ostringstream` inefficient,
+because a copy is always made... This paper proposes to adjust the API of `basic_stringbuf` and the corresponding stream class templates to allow accessing the underlying string more efficiently.
+> 
+> If accepted this would allow direct access, *a-la* `string_view`, to a `streambuf`'s underlying buffer and avoid the additional copy created by calling `str()` as mentioned above. Good luck Peter!
+
+<p style="text-align: center;">💎</p>
+
 ## Summary
 Iostreams are much maligned, but they go back a long way and for better or worse they shall remain with us for a while yet. Many idioms build upon them and occasionally one needs to dip a toe into these frigid waters. This post is not intended as a comprehensive tutorial but mostly as a public pasteboard where I can come and remember how to do these things in a few years instead of rummaging and collecting this info again elsewhere. I hope you find it useful too. 
 
