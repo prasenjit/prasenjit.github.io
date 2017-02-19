@@ -140,7 +140,7 @@ A natural extension to this class would be to also accept a [`std::string_view`]
 
 >  **Update**  
 > In the [Feb. 2017 ISO C++ mailing](http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2017/#mailing2017-02), [Peter Sommerlad](https://twitter.com/PeterSommerlad) proposes:  
-> [P0408R1: Efficient Access to basic stringbuf's Buffer](http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2017/p0408r1.pdf).  
+> [P0408R1 - Efficient Access to basic stringbuf's Buffer](http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2017/p0408r1.pdf).  
 > 
 > From the paper:  
 > Streams have been the oldest part of the C++ standard library and their specification
@@ -148,8 +148,14 @@ doesn’t take into account many things introduced since C++11. One of the overs
 that there is no non-copying access to the internal buffer of a `basic_stringbuf` which
 makes at least the obtaining of the output results from an `ostringstream` inefficient,
 because a copy is always made... This paper proposes to adjust the API of `basic_stringbuf` and the corresponding stream class templates to allow accessing the underlying string more efficiently.
+>
+> If accepted this would allow direct access, *a-la* `string_view`, to a `streambuf`'s underlying buffer and avoid the additional copy created by calling `str()` as mentioned in the **Custom Stream Buffers** section above. 
 > 
-> If accepted this would allow direct access, *a-la* `string_view`, to a `streambuf`'s underlying buffer and avoid the additional copy created by calling `str()` as mentioned above. Good luck Peter!
+> Alternatively, Peter Sommerlad points me to another proposal of his: [P0448R0 - A strstream replacement using `span<charT>` as buffer](http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2016/p0448r0.pdf) which  proposes *"a class template `basic_spanbuf` and the corresponding stream class templates to enable the use of streams on externally provided memory buffers. No ownership or re-allocation support is given. For those features we have string-based streams."*
+>
+> If accepted this would allow creating a `streambuf` object `basic_spanbuf` as a direct view over our external buffer in the **Custom Stream Buffer View** example. 
+> 
+> Good luck Peter!
 
 <p style="text-align: center;">💎</p>
 
