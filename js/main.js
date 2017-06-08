@@ -1,6 +1,9 @@
 ---
 layout: null
+sitemap:
+  exclude: 'yes'
 ---
+
 $(document).ready(function () {
   $('a.blog-button').click(function (e) {
     $('.content-wrapper__inner').css('display', 'block')
