@@ -25,7 +25,7 @@ Along the way, I developed my own way of structuring such cross-platform (core) 
 > Like all good architectures, the Salami Method tries to cleanly separate concerns.  
 > Nevertheless, it lacks the greasy, heart-attack-inducing goodness of a good salami.
 
-Be it creating DLLs, Android NDK/JNI, C++ on iOS or even GUI-based desktop apps, many samples, articles, tutorials and examples frequently mix platform specific code with core functionality. While this might serve to demonstrate spacific API usage and techniques, it often leads to spaghetti code.
+Be it creating DLLs, Android NDK/JNI, C++ on iOS or even GUI-based desktop apps, many samples, articles, tutorials and examples frequently mix platform specific code with core functionality. While this might serve to demonstrate specific API usage and techniques, it often leads to spaghetti code.
 The result is a refactoring and maintenance nightmare that is non-portable, untestable with ample nooks and crannies for bugs to hide in. 
 To make things worse, module boundaries (e.g. DLL APIs), are dangerous places where error handling must be considered and addressed carefully as things like exceptions might not be able to percolate further causing program termination or undefined-behavior.
 
@@ -39,15 +39,17 @@ The benefits of thinly slicing our API include:
 
 - **The DRY principle**: Sharing as much code as possible between platforms, avoids duplication and reimplementation.
 - **Single Responsibility and Testability**: Each layer has its own single purpose and can be debugged and tested independently.
-- **Consistency**: Business logic remains isolated in the deepest layers and is shared among all target platforms. This ensure consistent behavior across platforms.
+- **Consistency**: Business logic remains isolated in the deepest layers and is shared among all target platforms. This ensures consistent behavior across platforms.
 - **New Platforms**: Code is future ready for targeting new platforms. 
 - **Developer Skills**: Leverage skills of different developers independently at relevant parts of the code. No mixing of concerns. 
 - **Refactoring**: Well separated concerns allow for easier refactoring.
 
+We identify the following conceptual layers:
+
 ![img](../../assets/salami_method.svg)
 
 Often you will find that not all of these layers make sense as distinct code layers. In some situations it may be more practical to merge two layers into a single layer - *thicker slices*, if you will.  
-Similarly, some platform may not require all the layers described here. For example, C++ code can be integrated into iOS and Objective-C code more painlessly than e.g. creating an Android JNI. On these platforms the top layers can be left unused.  
+Similarly, some platforms may not require all the layers described here. For example, C++ code can be integrated into iOS and Objective-C code more painlessly than e.g. creating an Android JNI. On these platforms the top layers can be left unused.  
 
 Even when not actually implementing all these layers as separate code, it is important to realize that they might still be conceptually in the code.
 
@@ -68,7 +70,7 @@ At the heart of our system lies the cross-platform C++ core. The apple of our ey
 At this layer we expose only the public API of our C++ core.  
 Here we consider the codebase from the user or client usage perspective as opposed to the architectural design perspective we may have used in the core layer. We should apply good API design principles as usual, thinking about how the API is to-be used, considering things like initialization and shutdown, lifetime management, sessions, configuration, serialization etc.
 
-It is a kind of SDK that can be delivered and built by other teams without the need for access to or familiarity with the full codebase, the build tools or any dependent libraries.
+It is a kind of SDK that can be delivered and built by other teams without the need for access to, or familiarity with, the full codebase, the build tools or any dependent libraries.
 
 This is the opportunity for a compilation firewall (e.g. via the [pImpl Idiom](https://en.wikipedia.org/wiki/Opaque_pointer)). Keep private headers, types and repos private.   
 We might want to remove certain types from the public API and use various alternatives instead. For example, perhaps our codebase passes and manipulates `std::filesystem::path` objects. It is often easier for external users to use `std::string` instead (see my ["Emscriptened!"](https://adishavit.github.io/2016/emscipten-fs-path/) post for an exactly this use case).  
