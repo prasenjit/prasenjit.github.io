@@ -1,9 +1,9 @@
 ---
-title:  "OpenCV 3 Projects for Photo Filtering"
+title:  "My First Video Course!"
 categories: [OpenCV]
 tags: [OpenCV, video, course]
 ---
-My first OpenCV video course is [now available](https://www.packtpub.com/application-development/opencv-3-projects-photo-filtering-video)!
+My first OpenCV video course, **OpenCV 3 Projects for Photo Filtering**, is [now available](https://www.packtpub.com/application-development/opencv-3-projects-photo-filtering-video)!
 
 [![Cover](../../assets/V06945_MockupCover.png)](https://www.packtpub.com/application-development/opencv-3-projects-photo-filtering-video) [![OpenCV](../../assets/opencv_373.png)](http://opencv.org/)  
 
