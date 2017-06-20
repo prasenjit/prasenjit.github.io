@@ -39,7 +39,7 @@ How hard can it be?
 
 This whole journey started when I came upon the [OpenCV.js](https://github.com/ucisysarch/opencvjs) project. This project provides *"JavaScript Bindings for OpenCV"*. Essentially exposing OpenCV types and functionality via a JS interface.  
 But I'm a C++ guy and, more importantly, wanting to write *cross-platform*, multi-target code, I want to continue working in C++. OpenCV.js does the opposite of what I wanted.    
-It did however manage to build OpenCV with Emscripten, so bootom line: **it can be done!**  
+It did however manage to build OpenCV with Emscripten, so bottom line: **it can be done!**  
 
 ### The Build System
 OpenCV.js used custom Python scripts to build OpenCV instead of using CMake. I wanted to build OpenCV directly using its own CMake files, as these are always kept in sync with the latest versions and I did not want the additional Python in the build toolchain.    
@@ -458,7 +458,7 @@ Similarly, it would be great if/when Emscripten (or WASM) could use the JS buffe
 <p style="text-align: center;"><img src="http://cultofthepartyparrot.com/parrots/tripletsparrot.gif"></p>
 
 *If you found this post interesting, or you have more thoughts on this subject, please leave a message in the comments, Twitter or Reddit. If you know of better ways to do this, DO let me know!  
-You can also follow me on [Twitter](https://twitter.com/adishavit).*
+Follow me on [Twitter](https://twitter.com/adishavit).*
 
  
 *Credits: 
