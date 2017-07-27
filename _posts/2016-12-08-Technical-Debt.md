@@ -31,7 +31,7 @@ See that [answer](http://stackoverflow.com/a/17822241/135862) for more details w
 
 
 ### Calling Conventions
-In my [Lambda Magic ✨ post](https://adishavit.github.io/2016/magical-captureless-lambdas/), I mentioned that on 32-bit *Windows* captureless lambdas not only implicitly convert to function pointers, but in fact they can assume any calling convention desired.  
+In my [Lambda Magic ✨ post](https://girishnayak12.github.io/2016/magical-captureless-lambdas/), I mentioned that on 32-bit *Windows* captureless lambdas not only implicitly convert to function pointers, but in fact they can assume any calling convention desired.  
 
 However, consider the following code:
 
@@ -80,7 +80,7 @@ However, such systems are probably not as common on non-Windows environments, an
 Here's a [⚡godbolt⚡](https://godbolt.org/g/FBgT98) demonstrating these two compilation errors on the two compilers with a 32-bit build.
 
 ### Callbackize
-Following my [Lambda Callbacks📞](https://adishavit.github.io/2016/lambdas-callbacks/) post, [Vaughn Cato](https://twitter.com/AdiShavit/status/804246649006686208) came up with an even cleaner implementation of a function to convert any capturing lambda into a function-pointer. Here it is with some tweaks:
+Following my [Lambda Callbacks📞](https://girishnayak12.github.io/2016/lambdas-callbacks/) post, [Vaughn Cato](https://twitter.com/girishnayak12/status/804246649006686208) came up with an even cleaner implementation of a function to convert any capturing lambda into a function-pointer. Here it is with some tweaks:
 
 ```cpp
 template <typename Lambda>

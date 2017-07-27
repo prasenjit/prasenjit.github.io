@@ -42,9 +42,9 @@ Most of these functions have subtle contexts, conditions and effects that should
 
 To better understand all these possibilities, I created a [GraphViz diagram][GitHub] showing the various program termination flows as defined by the standard.  
 The orange path shows normal program termination.
-[![The call graph](https://raw.githubusercontent.com/adishavit/Terminators/master/termination_graph.png)](https://cdn.rawgit.com/adishavit/Terminators/master/termination_graph.svg)
+[![The call graph](https://raw.githubusercontent.com/girishnayak12/Terminators/master/termination_graph.png)](https://cdn.rawgit.com/girishnayak12/Terminators/master/termination_graph.svg)
 
-The full res SVG is [here](https://cdn.rawgit.com/adishavit/Terminators/master/termination_graph.svg).  
+The full res SVG is [here](https://cdn.rawgit.com/girishnayak12/Terminators/master/termination_graph.svg).  
 The diagram repo is [here][GitHub].  
 The image is taken directly from the repo, so any updates there will be reflected here.
 
@@ -80,5 +80,5 @@ Corrections, additions, pull-requests, updates and layout improvements will be g
 [www.tablesgenerator.com](http://www.tablesgenerator.com/) ::
 [icon](http://pixeljoint.com/pixelart/1187.htm)*
 
-[GitHub]:[https://github.com/adishavit/Terminators]
+[GitHub]:[https://github.com/girishnayak12/Terminators]
 [jfbastian-terminator]: (https://github.com/jfbastien/terminator)

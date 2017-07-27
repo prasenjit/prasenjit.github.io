@@ -6,7 +6,7 @@ tags: [C++, C++17, filesystem]
 The `path` to the web. 
 
 ![img](../../assets/path2.jpg)
-In my [last post](https://adishavit.github.io/2016/fs-path/) I showed the effects of various methods of `filesystem::path`. It occurred to me that it might be a fun little project to generate a web-based interactive version of the post.  
+In my [last post](https://girishnayak12.github.io/2016/fs-path/) I showed the effects of various methods of `filesystem::path`. It occurred to me that it might be a fun little project to generate a web-based interactive version of the post.  
 
 Since I didn't want to reimplement `filesystem::path` in Javascript, this would be a good chance to try [emscripten](https://kripken.github.io/emscripten-site/index.html), something that I've been meaning to do for some time:  
 

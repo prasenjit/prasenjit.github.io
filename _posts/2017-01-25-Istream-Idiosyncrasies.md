@@ -57,7 +57,7 @@ When returning an object of type `std::istringstream` it is in fact either moved
 
 Interestingly, when a GitHub user wanted Argh to support GCC 4.9, it [turned out](http://stackoverflow.com/questions/40110466/workaround-for-returning-uncopyable-object-without-a-move-ctor) that [the move ctor is missing](https://gcc.gnu.org/bugzilla/show_bug.cgi?id=54316) which caused the code to not build.
 
-The workaround, [contributed](https://github.com/adishavit/argh/pull/6) by the diligent [@ChaosCabbage](https://github.com/ChaosCabbage) was to create a proxy class around `std::istringstream` which *does* have a copy ctor:
+The workaround, [contributed](https://github.com/girishnayak12/argh/pull/6) by the diligent [@ChaosCabbage](https://github.com/ChaosCabbage) was to create a proxy class around `std::istringstream` which *does* have a copy ctor:
 
 ```cpp
 stringstream_proxy(const stringstream_proxy& other) :
@@ -78,7 +78,7 @@ Learn to embrace the little surprises in life. Keep notes of what you did and ma
 
 If you want to learn more about Argh, find it [here][Argh]. If you find it useful, do drop me a note - I assure you, it'll make my day. Pull requests will be gladly accepted.
 
-*If you found this post helpful, or you have more thoughts on this subject, please leave a message in the comments, Twitter or Reddit. You can also follow me on [Twitter](https://twitter.com/adishavit).*
+*If you found this post helpful, or you have more thoughts on this subject, please leave a message in the comments, Twitter or Reddit. You can also follow me on [Twitter](https://twitter.com/girishnayak12).*
 
 
 *Credit:
@@ -86,4 +86,4 @@ If you want to learn more about Argh, find it [here][Argh]. If you find it usefu
 
 
 
-[Argh]: https://github.com/adishavit/argh
+[Argh]: https://github.com/girishnayak12/argh

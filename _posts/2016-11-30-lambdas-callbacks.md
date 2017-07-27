@@ -14,7 +14,7 @@ Consider:
 void nifty_thing_doer(void (*callback)(int));
 ```
 
-In the [first post in this series](https://adishavit.github.io/2016/magical-captureless-lambdas/) we saw that *captureless* lambdas can automatically convert to function pointers. Thus, we can easily pass `nifty_thing_doer()` a captureless lambda like so: 
+In the [first post in this series](https://girishnayak12.github.io/2016/magical-captureless-lambdas/) we saw that *captureless* lambdas can automatically convert to function pointers. Thus, we can easily pass `nifty_thing_doer()` a captureless lambda like so: 
 
 ```cpp
 ::nifty_thing_doer([](int i){ /* admire i */ });
@@ -75,7 +75,7 @@ void f()
 ```
 Here, `std::tie` is used to create a `tuple` of *references* to the local variables. This also means that we can bind uncopyable, unmovable types like `MtEverest`.  
 
-In the [second post in the series](https://adishavit.github.io/2016/leaky-closures-captureless-lambdas/), we saw that there are multiple entities that *can* be accessed from a captureless lambda, and that these are governed by the so called *ODR-use* rule.
+In the [second post in the series](https://girishnayak12.github.io/2016/leaky-closures-captureless-lambdas/), we saw that there are multiple entities that *can* be accessed from a captureless lambda, and that these are governed by the so called *ODR-use* rule.
 
 Inside our lambda we need to cast the type-erased `user_data` to our payload type. Although we do not capture `payload` (this is a captureless lambda), we can still use it within a *non*-ODR-use such as in `decltype(payload)` to get the correct type of our tuple. From there all that is left to do is create handy aliases for the tuple elements.  
 

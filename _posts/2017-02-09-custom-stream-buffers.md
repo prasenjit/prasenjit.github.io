@@ -22,9 +22,14 @@ The other library, call it *the device library*, provided a C-style write functi
 
 I needed to get the encoding library to encode my data and write the encoded data into the device using this API. The easiest solution is of course:
 
-```cppEncoder encoder; 
-// fill encoder with data...std::ostringstream ostr;encoder.encode(ostr);
-auto buf_str = ostr.str(); // makes another COPY!device_write_callback(buf_str.c_str(), buf_str.size());
+```cpp
+Encoder encoder; 
+// fill encoder with data...
+
+std::ostringstream ostr;
+encoder.encode(ostr);
+auto buf_str = ostr.str(); // makes another COPY!
+device_write_callback(buf_str.c_str(), buf_str.size());
 ``` 
     
 This works, but has a major drawback: the encoder will first encode all the data into an internal *in-memory* buffer. Only after this is allocated and done, will the entire thing be written to the device. If our encoded data is very large, this can consume copious amounts of memory.  
@@ -45,8 +50,28 @@ We will create our own class derived from [`std::streambuf`](http://en.cpprefere
 A thorough review of iostreams and stream-buffers is *way* beyond the scope of this post (or my knowledge for that matter). So here's how to create a simple little `streambuf` to avoid the extraneous memory allocations (at least on your side) and just call the callback with whatever data is ready to be written:  
 
 ```cpp
-template <typename Callback>struct callback_ostreambuf : public std::streambuf{    using callback_t = Callback;    callback_ostreambuf(Callback cb, void* user_data = nullptr): 
-       callback_(cb), user_data_(user_data) {}protected:    std::streamsize xsputn(const char_type* s, std::streamsize n) override     {         return callback_(s, n, user_data_); // returns the number of characters successfully written.    };    int_type overflow(int_type ch) override     {         return callback_(&ch, 1, user_data_); // returns the number of characters successfully written.    }private:    Callback callback_;    void* user_data_;};
+template <typename Callback>
+struct callback_ostreambuf : public std::streambuf
+{
+    using callback_t = Callback;
+    callback_ostreambuf(Callback cb, void* user_data = nullptr): 
+       callback_(cb), user_data_(user_data) {}
+
+protected:
+    std::streamsize xsputn(const char_type* s, std::streamsize n) override 
+    { 
+        return callback_(s, n, user_data_); // returns the number of characters successfully written.
+    };
+
+    int_type overflow(int_type ch) override 
+    { 
+        return callback_(&ch, 1, user_data_); // returns the number of characters successfully written.
+    }
+
+private:
+    Callback callback_;
+    void* user_data_;
+};
 ```
 Basically, we derive our class from `std::streambuf` and override the two virtual functions `xsputn()` and `overflow()`. The default (base) implementations of the rest of the streambuf methods will eventually reach these two functions: one writes a single character and the other several (in fact, the *default* implementation of `std::streambuf::xsputn()` calls `std::streambuf::overflow()` `n`-times). 
 
@@ -58,13 +83,23 @@ A few things to note:
 We can also add a little helper `make` function:
 
 ```cpp
-template <typename Callback>auto make_callback_ostreambuf(Callback cb, void* user_data = nullptr){    return callback_ostreambuf<Callback>(cb, user_data);}
+template <typename Callback>
+auto make_callback_ostreambuf(Callback cb, void* user_data = nullptr)
+{
+    return callback_ostreambuf<Callback>(cb, user_data);
+}
 ```
 
 We can now use our class like this:
 
 ```cpp
-auto cbsbuf = make_callback_ostreambuf([](const void* buf, std::streamsize sz, void* user_data){    std::cout.write(reinterpret_cast<const char*>(buf), sz);    return sz; // return the numbers of characters written.});std::ostream ostr(&cbsbuf);ostr << "TEST " << 42; // Write string and integer
+auto cbsbuf = make_callback_ostreambuf([](const void* buf, std::streamsize sz, void* user_data)
+{
+    std::cout.write(reinterpret_cast<const char*>(buf), sz);
+    return sz; // return the numbers of characters written.
+});
+std::ostream ostr(&cbsbuf);
+ostr << "TEST " << 42; // Write string and integer
 ```
 Although somewhat contrived, this will print `TEST 42` to the console. In fact in such a lambda we can call any other device writing API regardless of the actual signature of that API.
 
@@ -116,14 +151,64 @@ What we want is an "`istring_viewstream`" that will stream a *view* of our buffe
 Fortunately, that's pretty short work: 
 
 ```cpp
-template <typename Byte = char>class istreambuf_view : public std::streambuf{public:    using byte = Byte;    static_assert(1 == sizeof(byte), "sizeof buffer element type 1.");    istreambuf_view(const byte* data, size_t len) :     // ptr + size        begin_(data), end_(data + len), current_(data)    {}    istreambuf_view(const byte* beg, const byte* end) : // begin + end        begin_(beg), end_(end), current_(beg)    {}protected:    int_type underflow() override    {        return (current_ == end_ ? traits_type::eof() : traits_type::to_int_type(*current_));    }    int_type uflow() override    {        return (current_ == end_ ? traits_type::eof() : traits_type::to_int_type(*current_++));    }    int_type pbackfail(int_type ch) override    {        if (current_ == begin_ || (ch != traits_type::eof() && ch != current_[-1]))            return traits_type::eof();        return traits_type::to_int_type(*--current_);    }    std::streamsize showmanyc() override    {        return end_ - current_;    }    const byte* const begin_;    const byte* const end_;    const byte* current_;};
+template <typename Byte = char>
+class istreambuf_view : public std::streambuf
+{
+public:
+    using byte = Byte;
+    static_assert(1 == sizeof(byte), "sizeof buffer element type 1.");
+
+    istreambuf_view(const byte* data, size_t len) :     // ptr + size
+        begin_(data), end_(data + len), current_(data)
+    {}
+
+    istreambuf_view(const byte* beg, const byte* end) : // begin + end
+        begin_(beg), end_(end), current_(beg)
+    {}
+
+protected:
+    int_type underflow() override
+    {
+        return (current_ == end_ ? traits_type::eof() : traits_type::to_int_type(*current_));
+    }
+
+    int_type uflow() override
+    {
+        return (current_ == end_ ? traits_type::eof() : traits_type::to_int_type(*current_++));
+    }
+
+    int_type pbackfail(int_type ch) override
+    {
+        if (current_ == begin_ || (ch != traits_type::eof() && ch != current_[-1]))
+            return traits_type::eof();
+
+        return traits_type::to_int_type(*--current_);
+    }
+
+    std::streamsize showmanyc() override
+    {
+        return end_ - current_;
+    }
+
+    const byte* const begin_;
+    const byte* const end_;
+    const byte* current_;
+};
 ```
 Again, we derive our class `istreambuf_view` from `std::streambuf` and this time override a different set of virtual functions. All this class really does is manage 3 pointers. 
 
 The usage is quite straight forward:
 
 ```cpp
-auto buffer = "TEST 42"s;auto view_buf = istreambuf_view<>(buffer.data(), buffer.size());std::istream istr(&view_buf);std::string str;int v = 0;istr >> str >> v; // Read string and then integerassert("TEST" == str && 42 == v);```
+auto buffer = "TEST 42"s;
+auto view_buf = istreambuf_view<>(buffer.data(), buffer.size());
+std::istream istr(&view_buf);
+
+std::string str;
+int v = 0;
+istr >> str >> v; // Read string and then integer
+assert("TEST" == str && 42 == v);
+```
 
 A few things to note:
 
@@ -169,7 +254,7 @@ Acknowledgments:
 - Miro Knejp taught me the term *diamond operator* and cool uses for *user-defined template constructor deduction guides*.
 - [This SO answer](http://stackoverflow.com/a/13704122/135862) and [this post](https://artofcode.wordpress.com/2010/12/12/deriving-from-stdstreambuf/) for pointing me in the right directions.
 
-*If you found this post helpful, or you have more thoughts on this subject, please leave a message in the comments, Twitter or Reddit. You can also follow me on [Twitter](https://twitter.com/adishavit).*
+*If you found this post helpful, or you have more thoughts on this subject, please leave a message in the comments, Twitter or Reddit. You can also follow me on [Twitter](https://twitter.com/girishnayak12).*
 
 *Credit:
 [banner](https://www.pexels.com/photo/nature-water-rocks-stream-128184/)*

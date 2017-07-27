@@ -73,7 +73,7 @@ Here we consider the codebase from the user or client usage perspective as oppos
 It is a kind of SDK that can be delivered and built by other teams without the need for access to, or familiarity with, the full codebase, the build tools or any dependent libraries.
 
 This is the opportunity for a compilation firewall (e.g. via the [pImpl Idiom](https://en.wikipedia.org/wiki/Opaque_pointer)). Keep private headers, types and repos private.   
-We might want to remove certain types from the public API and use various alternatives instead. For example, perhaps our codebase passes and manipulates `std::filesystem::path` objects. It is often easier for external users to use `std::string` instead (see my ["Emscriptened!"](https://adishavit.github.io/2016/emscipten-fs-path/) post for an exactly this use case).  
+We might want to remove certain types from the public API and use various alternatives instead. For example, perhaps our codebase passes and manipulates `std::filesystem::path` objects. It is often easier for external users to use `std::string` instead (see my ["Emscriptened!"](https://girishnayak12.github.io/2016/emscipten-fs-path/) post for an exactly this use case).  
 Another example I came across was a team that did not <del>know how</del> want to include Boost in their build chain. They asked that any Boost used in the core is contained within the code and does not leak through the API. In fact, we eventually delivered only headers and binary libraries for this particular team.
 
 The Cross Platform C++ Public API layer is possibly a poster child candidate for C++ Modules when they finally land.  
@@ -208,7 +208,13 @@ On Android we typically have something like this:
 
 ```cpp
 // foo_session_c_api_jni.cpp
-#include <jni.h>               // JNI headers#include <android/log.h>       // Android loggin facilities#include <foo_session_c_api.h> // C API#include "jni_utils.h"         // For JNIByteArrayAdapter and exceptionHandlerJNIEXPORT jboolean JNICALL Java_initFromFileName(JNIEnv* env, jobject thiz, jstring fileName) try
+#include <jni.h>               // JNI headers
+#include <android/log.h>       // Android loggin facilities
+
+#include <foo_session_c_api.h> // C API
+#include "jni_utils.h"         // For JNIByteArrayAdapter and exceptionHandler
+
+JNIEXPORT jboolean JNICALL Java_initFromFileName(JNIEnv* env, jobject thiz, jstring fileName) try
 {  return ::initFromFileName(jni_utils::getString(env, fileName)); } // JNI string helper
 catch(...) { return exceptionHandler(); }
 
@@ -280,7 +286,22 @@ Let's say we have a face detector that returns the 2D position of the center of 
 
 ```java
 // face_detector_native.java
-import android.graphics.PointF; // Android point typepublic class FaceDetector {   static { System.loadLibrary("native_facedetector"); } // load the DLL      // native import function/method, returns a float array   public static native float[] getFaceCenterPoint();      // Java-ized wrapper: return proper 2D point type   public static PointF GetFaceCenterPoint()   {      float[] centerPt = getFaceCenterPoint();     // call native function      return new PointF(centerPt[0], centerPt[1]); // return as Android Java type: PointF   }}
+import android.graphics.PointF; // Android point type
+
+public class FaceDetector 
+{
+   static { System.loadLibrary("native_facedetector"); } // load the DLL
+   
+   // native import function/method, returns a float array
+   public static native float[] getFaceCenterPoint();
+   
+   // Java-ized wrapper: return proper 2D point type
+   public static PointF GetFaceCenterPoint()
+   {
+      float[] centerPt = getFaceCenterPoint();     // call native function
+      return new PointF(centerPt[0], centerPt[1]); // return as Android Java type: PointF
+   }
+}
 ```
 - The wrapper here is just another *non*-`native` method: `GetFaceCenterPoint()` for the same class. Similar wrappers can be made for .NET managed code as well.
 

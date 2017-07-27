@@ -177,7 +177,7 @@ namespace color_cycle
 }
 ```
 
-The [`rotate_hue()` function](https://github.com/adishavit/party_parrot/blob/master/color_cycle.cpp) expects two images: an input color image `img` and an out parameter  `result_img`. It also takes an integer `hsteps` for the cycling speed.  
+The [`rotate_hue()` function](https://github.com/girishnayak12/party_parrot/blob/master/color_cycle.cpp) expects two images: an input color image `img` and an out parameter  `result_img`. It also takes an integer `hsteps` for the cycling speed.  
 Note that the function expects the output image `result_img` to already be allocated and of the correct size and format.  
 
 As with any online, real-time, processing algorithm it is important to avoid repeated reallocations.  
@@ -190,11 +190,11 @@ Since these are simple cross-platform C functions, this core functionality code 
 
 <p style="text-align: center;"><img src="http://cultofthepartyparrot.com/parrots/hd/parrot.gif" height="28px"></p>
 
-All the code can be found [here](https://github.com/adishavit/party_parrot). 
+All the code can be found [here](https://github.com/girishnayak12/party_parrot). 
 
 
 ## Platform Targeting
-Our project's [`CMakeLists.txt`](https://github.com/adishavit/party_parrot/blob/master/CMakeLists.txt) file is surprisingly similar to any OpenCV dependent project's. It basically does `find_package(OpenCV REQUIRED)` and `include_directories(${OpenCV_INCLUDE_DIRS})` into the projects. It then `target_link_libraries()` with `${OpenCV_LIBS}`.
+Our project's [`CMakeLists.txt`](https://github.com/girishnayak12/party_parrot/blob/master/CMakeLists.txt) file is surprisingly similar to any OpenCV dependent project's. It basically does `find_package(OpenCV REQUIRED)` and `include_directories(${OpenCV_INCLUDE_DIRS})` into the projects. It then `target_link_libraries()` with `${OpenCV_LIBS}`.
 
 CMake will generate a *XAPI* static library `color_cycle_lib` for all platforms, and an additional second target "driver" app which is platform-specific (e.g. Emspcripten or desktop), .
 
@@ -208,16 +208,16 @@ target_link_libraries(color_cycle_asm ${OpenCV_LIBS} color_cycle_lib)
 This creates the `color_cycle_asm` JavaScript module and links it with both OpenCV and our static library `color_cycle_lib`. We set the Emscripten compiler flags:  
 `SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++1z --llvm-lto 1 --bind -s ASSERTIONS=2 --memory-init-file 0 -O3")` and that's really all there is to it!
 
-The full file is [here](https://github.com/adishavit/party_parrot/blob/master/CMakeLists.txt).
+The full file is [here](https://github.com/girishnayak12/party_parrot/blob/master/CMakeLists.txt).
 
 <p style="text-align: center;"><img src="http://cultofthepartyparrot.com/parrots/hd/rightparrot.gif" height="28px"></p>
 
 ## The Boundary Interface Layer (BIL)
-For the Emscripten target, the [platform-specific Boundary Interface Layer (BIL)](http://videocortex.io/2017/salami-method/#the-platform-specific-boundary-interface-layer-bil) is the C-wrapper in [`color_cycle_js.cpp`](https://github.com/adishavit/party_parrot/blob/master/web/color_cycle_js.cpp):  
+For the Emscripten target, the [platform-specific Boundary Interface Layer (BIL)](http://videocortex.io/2017/salami-method/#the-platform-specific-boundary-interface-layer-bil) is the C-wrapper in [`color_cycle_js.cpp`](https://github.com/girishnayak12/party_parrot/blob/master/web/color_cycle_js.cpp):  
 
 >"The role of this layer is to have one clear place in the code where the core interfaces the target platform. This is where platform-specific conventions, constraints and conversions are enforced. It is here that we must perform bidirectional data type and value conversions between the “native” target platform and our platform agnostic code from the previous layers. The required conversions are dictated by each particular target.
 
-Here are the interesting bits of the [file](https://github.com/adishavit/party_parrot/blob/master/web/color_cycle_js.cpp):  
+Here are the interesting bits of the [file](https://github.com/girishnayak12/party_parrot/blob/master/web/color_cycle_js.cpp):  
 
 ```cpp
 #include <emscripten.h>
@@ -279,13 +279,13 @@ The function expects raw pointers to 4-channel, 8-bit, memory buffers representi
 
 The BIL is the only place where Emscripten, the host platform, is `#include`d and acknowledged.  
 
-One important thing to note, is that we are exporting the C function directly, and we'll be calling it directly (that's why we need to specify the `EMSCRIPTEN_KEEPALIVE` flag). The Emscripten binding tools like [Embind](https://kripken.github.io/emscripten-site/docs/porting/connecting_cpp_and_javascript/embind.html) and the [WebIDL Binder](https://kripken.github.io/emscripten-site/docs/porting/connecting_cpp_and_javascript/WebIDL-Binder.html) introduce multiple conversions and redundant memory copying overhead that makes them terribly inefficient for transferring large memory buffers. Similarly, `ccall()` and `cwrap()` introduce unneccessary delays on the JS side. I've [seen](https://github.com/adishavit/emscripten_buffers) innocuous JS ArrayBuffer-passing code that silently incurred at least 3 consecutive copying of the data *before* reaching the C++ code!  
+One important thing to note, is that we are exporting the C function directly, and we'll be calling it directly (that's why we need to specify the `EMSCRIPTEN_KEEPALIVE` flag). The Emscripten binding tools like [Embind](https://kripken.github.io/emscripten-site/docs/porting/connecting_cpp_and_javascript/embind.html) and the [WebIDL Binder](https://kripken.github.io/emscripten-site/docs/porting/connecting_cpp_and_javascript/WebIDL-Binder.html) introduce multiple conversions and redundant memory copying overhead that makes them terribly inefficient for transferring large memory buffers. Similarly, `ccall()` and `cwrap()` introduce unneccessary delays on the JS side. I've [seen](https://github.com/girishnayak12/emscripten_buffers) innocuous JS ArrayBuffer-passing code that silently incurred at least 3 consecutive copying of the data *before* reaching the C++ code!  
 
 Also note that since this is a module boundary we need to beware of any exceptions. In this case I just catch anything and log the unfortunate event.
 
 <p style="text-align: center;"><img src="http://cultofthepartyparrot.com/parrots/hd/parrot.gif" height="28px"></p>
 
-On the desktop CMake target, I have [a separate driver app](https://github.com/adishavit/party_parrot/blob/master/main.cpp) that reads a video, applies `rotate_hue()` and displays the result. 
+On the desktop CMake target, I have [a separate driver app](https://github.com/girishnayak12/party_parrot/blob/master/main.cpp) that reads a video, applies `rotate_hue()` and displays the result. 
 
 
 ## The Native Import Layer [(NIMP)](http://videocortex.io/2017/salami-method/#the-native-import-layer-nimp)
@@ -293,11 +293,11 @@ At this point we have crossed the [Rubicon](https://en.wikipedia.org/wiki/Crossi
 
 [^2]: **Caveat**: *IANAJSD (I Am Not A JavaScript Developer)*. Most of the JS code presented here is based on the copy-pasted code from StackOverflow and the Interwebs. PRs and suggestions are most welcome. 
 
-All the JS logic for the web-page is in [`color_cycle.js`](https://github.com/adishavit/party_parrot/blob/master/web/color_cycle.js). A lot of it has to do with loading and showing an HTML5 video element and manipulating canvases. I adopted the code from a multitude of web samples, and delving into their details is not only not my specialty, but is not very pertinent to what we are discussing.  
+All the JS logic for the web-page is in [`color_cycle.js`](https://github.com/girishnayak12/party_parrot/blob/master/web/color_cycle.js). A lot of it has to do with loading and showing an HTML5 video element and manipulating canvases. I adopted the code from a multitude of web samples, and delving into their details is not only not my specialty, but is not very pertinent to what we are discussing.  
 
 Perhaps the only major performance-related *drawback* of using Emscripten over plain JavaScript, is that Emscripten cannot interact directly with JavaScript memory buffers (e.g. `ArrayBuffer`s or `TypedArray`s). Instead, memory buffers must be allocated *and released* (no GC) on the Emscripten heap via the `Module._malloc()` and `Module._free()` functions provided by Emscripten. When passing around ArrayBuffers or TypedArrays using Emscripten's binding tools, the wrappers will silently allocate heap data and copy everything there, and only then pass the data onwards (often incurring additional copies further down).  
 
-My [puzzlement](https://stackoverflow.com/questions/42434845/passing-a-js-arraybuffer-or-typedarray-to-emscripten-w-o-copying), [befuddlement](https://groups.google.com/forum/?#!starred/emscripten-discuss/CMfYljLWMvY), [research](https://github.com/adishavit/emscripten_buffers) and [inquiries](https://groups.google.com/forum/?#!starred/emscripten-discuss/wqea70w2W0I) eventually had [Alon Zakai](https://twitter.com/kripken), Emscripten's creator, explain to me to what is apparently the most efficient way to pass buffer data to Emscriptend code to-date.  
+My [puzzlement](https://stackoverflow.com/questions/42434845/passing-a-js-arraybuffer-or-typedarray-to-emscripten-w-o-copying), [befuddlement](https://groups.google.com/forum/?#!starred/emscripten-discuss/CMfYljLWMvY), [research](https://github.com/girishnayak12/emscripten_buffers) and [inquiries](https://groups.google.com/forum/?#!starred/emscripten-discuss/wqea70w2W0I) eventually had [Alon Zakai](https://twitter.com/kripken), Emscripten's creator, explain to me to what is apparently the most efficient way to pass buffer data to Emscriptend code to-date.  
 
 The relevant parts in the code are these:
 
@@ -364,7 +364,7 @@ In `renderFrame()` we:
 
 Note that we are passing the color-cycle-speed value `fp.color_change_speed` directly. Only pointers and buffers must explicitly use the heap (single values are copied there automagically).
 
-You can see the whole file [here: `color_cycle.js`](https://github.com/adishavit/party_parrot/blob/master/web/color_cycle.js).
+You can see the whole file [here: `color_cycle.js`](https://github.com/girishnayak12/party_parrot/blob/master/web/color_cycle.js).
 
 <p style="text-align: center;"><img src="http://cultofthepartyparrot.com/parrots/hd/rightparrot.gif" height="28px"></p>
 
@@ -426,7 +426,7 @@ Despite having built an outstanding working app, there are still a few outstandi
 
 2. **Intrinsics**: When building OpenCV, I had turned off *all* intrinsics related build options. This means OpenCV will be composed only of plain cross-platform C/C++ implementations. This seems to make sense as browsers tend to run on many diferent architectures and it is hard to make assumptions about them (and also JavaScript and SIMD are not an obvious couple).  
    However, Emscripten *does* in fact [support SIMD instructions](https://kripken.github.io/emscripten-site/docs/porting/simd.html)! You need to specify a few build, compiler and linker flags and SIMD code ought to be able to build. This may significantly improve OpenCV's performance (in general) as many/most of its functions have optimized SIMD versions.  
-   However, I didn't manage to get this to work as there were some missing header files that `emcc` could not find. If *anyone* knows how to create a SIMD enabled OpenCV build, *please* let me know or make a [pull request](https://github.com/adishavit/party_parrot).
+   However, I didn't manage to get this to work as there were some missing header files that `emcc` could not find. If *anyone* knows how to create a SIMD enabled OpenCV build, *please* let me know or make a [pull request](https://github.com/girishnayak12/party_parrot).
 1. When building OpenCV, I used the default Emscripten build configuration into static libraries. There is an optional CMake flag `EMSCRIPTEN_GENERATE_BITCODE_STATIC_LIBRARIES` which generates *"bitcode static libraries"* instead of the usual `.a` files. 
    I don't know if using this flag will make any difference or why/when one should to enable it. 
 3. I have not tried a WebAssembly (WASM) build - it would be nice to try that with the `asm.js` as a fallback for browsers with no WASM support.
@@ -440,7 +440,7 @@ Despite having built an outstanding working app, there are still a few outstandi
    BTW, identifying this silent build change shows why it's important to inspect the CMake build report.
 8. I am curious if there is a way to do a Visual Studio build. A [post](https://blogs.msdn.microsoft.com/vcblog/2017/06/14/cmake-support-in-visual-studio-whats-new-in-2017-15-3-preview-2/) from just a few days ago claims *"improved CMake and Ninja support in Visual Studio 15.3 Preview 2"*. Perhaps, this will allow editing and compiling in the IDE (even if the compiler is `emcc`).
 
-If you have any answers to these questions, please leave a message in the comments, tweet them to me, [open an issue](https://github.com/adishavit/party_parrot/issues) or make a [PR on GitHub](https://github.com/adishavit/party_parrot). I will update the post with the answers and due credit of course. 
+If you have any answers to these questions, please leave a message in the comments, tweet them to me, [open an issue](https://github.com/girishnayak12/party_parrot/issues) or make a [PR on GitHub](https://github.com/girishnayak12/party_parrot). I will update the post with the answers and due credit of course. 
 
 
 <p style="text-align: center;"><img src="http://cultofthepartyparrot.com/parrots/hd/middleparrot.gif" height="28px"></p>
@@ -458,7 +458,7 @@ Similarly, it would be great if/when Emscripten (or WASM) could use the JS buffe
 <p style="text-align: center;"><img src="http://cultofthepartyparrot.com/parrots/tripletsparrot.gif"></p>
 
 *If you found this post interesting, or you have more thoughts on this subject, please leave a message in the comments, Twitter or Reddit. If you know of better ways to do this, DO let me know!  
-Follow me on [Twitter](https://twitter.com/adishavit).*
+Follow me on [Twitter](https://twitter.com/girishnayak12).*
 
  
 *Credits: 

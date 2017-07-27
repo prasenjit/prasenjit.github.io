@@ -23,7 +23,7 @@ $(document).ready(function () {
     $('.content-wrapper__inner').css('display', 'block')
   }
 
-  if (window.location.pathname !== '{{ site.baseurl }}' && window.location.pathname !== '{{ site.baseurl }}index.html') {
+  if (window.location.pathname !== '{{ site.baseurl }}/' && window.location.pathname !== '{{ site.baseurl }}/index.html') {
     $('.panel-cover').addClass('panel-cover--collapsed')
     $('.content-wrapper__inner').css('display', 'block')
   }

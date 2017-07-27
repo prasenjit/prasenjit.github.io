@@ -50,7 +50,40 @@ The relevant events are `EVENT_MOUSEWHEEL` and `EVENT_MOUSEHWHEEL`. The amount o
 Putting it all together (with a sprinkling of C++11) looks something like this:
 
 ```cpp
-#include <iostream>#include <opencv2\highgui.hpp>#include <opencv2\opencv.hpp>int main(int argc, char* argv[]){    if (argc < 2)    {        std::cerr << "Usage: " << argv[0] << " <image file name>\n";        return EXIT_SUCCESS;    }    cv::Mat img = cv::imread(argv[1]);    cv::imshow("image", img);    cv::setMouseCallback("image", [](int event, int x, int y, int flags, void* userdata)     {        cv::Mat& image = *reinterpret_cast<cv::Mat*>(userdata); // get source image        static cv::Mat tmp; // make static to avoid reallocations per call        image.copyTo(tmp);  // overwrite old image with fresh copy        static int radius = 21;        if (cv::EVENT_MOUSEWHEEL == event)            radius = std::max(11, radius + cv::getMouseWheelDelta(flags) / 120);        cv::circle(tmp, { x,y }, radius, { 255.,255.,255. }); // draw a circle around mouse position        cv::imshow("image", tmp);    }, &img);    const auto CTRL_C = 3;    while (CTRL_C == cv::waitKey()); // don't close on Ctrl-C    return EXIT_SUCCESS;}
+#include <iostream>
+#include <opencv2\highgui.hpp>
+#include <opencv2\opencv.hpp>
+
+int main(int argc, char* argv[])
+{
+    if (argc < 2)
+    {
+        std::cerr << "Usage: " << argv[0] << " <image file name>\n";
+        return EXIT_SUCCESS;
+    }
+
+    cv::Mat img = cv::imread(argv[1]);
+    cv::imshow("image", img);
+
+    cv::setMouseCallback("image", [](int event, int x, int y, int flags, void* userdata) 
+    {
+        cv::Mat& image = *reinterpret_cast<cv::Mat*>(userdata); // get source image
+        static cv::Mat tmp; // make static to avoid reallocations per call
+        image.copyTo(tmp);  // overwrite old image with fresh copy
+
+        static int radius = 21;
+        if (cv::EVENT_MOUSEWHEEL == event)
+            radius = std::max(11, radius + cv::getMouseWheelDelta(flags) / 120);
+
+        cv::circle(tmp, { x,y }, radius, { 255.,255.,255. }); // draw a circle around mouse position
+        cv::imshow("image", tmp);
+    }, &img);
+
+    const auto CTRL_C = 3;
+    while (CTRL_C == cv::waitKey()); // don't close on Ctrl-C
+
+    return EXIT_SUCCESS;
+}
 ```
 Briefly, the code:
 
@@ -80,7 +113,7 @@ Well, here's *your* chance! OpenCV will gladly accept pull requests for more pla
 
 <p style="text-align: center;">💎</p>
 
-You can find the sample app on [GitHub](https://github.com/adishavit/highgui-gems).
+You can find the sample app on [GitHub](https://github.com/girishnayak12/highgui-gems).
 
 Got more tips and gems, please share them with me in the comments below, Twitter or elsewhere!
 

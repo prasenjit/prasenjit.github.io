@@ -2,17 +2,17 @@
 title: Video Cortex
 description: 'Insights and Visions'
 url: 'https://girishnayak12.github.io'
-baseurl: '/'
+baseurl: 
 #google_analytics: 'UA-86671472-1'
 #disqus_shortname: 'video-cortex'
 
 author:
   name: 'Adi Shavit'
   #email: josh@joshgerdes.com
-  twitter_username: adishavit
+  twitter_username: girishnayak12
   #facebook_username: joshgerdes
-  github_username:  adishavit
-  linkedin_username:  adishavit
+  github_username:  girishnayak12
+  linkedin_username:  girishnayak12
 
 defaults:
   -

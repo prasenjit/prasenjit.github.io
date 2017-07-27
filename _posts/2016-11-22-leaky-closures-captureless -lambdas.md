@@ -7,7 +7,7 @@ There is a whole host of powerful closure critters that can squeeze into a captu
 
 ![Magic](../../assets/colander.jpg)  
 
-In my [last post](https://adishavit.github.io/2016/magical-captureless-lambdas/) I posited: 
+In my [last post](https://girishnayak12.github.io/2016/magical-captureless-lambdas/) I posited: 
 
 > Like faeries, captureless lambdas are pure and magical creatures.  
 Unlike faeries, captureless lambdas can be converted to function pointers.

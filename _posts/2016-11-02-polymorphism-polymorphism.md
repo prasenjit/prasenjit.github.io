@@ -167,9 +167,9 @@ or in a feature table form:
 
 This idea originally posted on Twitter:
 
-- [Stack-based run-time polymorphism with std::variant. Abomination?](https://twitter.com/AdiShavit/status/789053849843691520)
-- [Type-safe stack-based run-time polymorphism with std::variant.](https://twitter.com/AdiShavit/status/789348353725300736)
-- [The Polymorphism of Runtime Polymorphism](https://twitter.com/AdiShavit/status/790816806919401472)
+- [Stack-based run-time polymorphism with std::variant. Abomination?](https://twitter.com/girishnayak12/status/789053849843691520)
+- [Type-safe stack-based run-time polymorphism with std::variant.](https://twitter.com/girishnayak12/status/789348353725300736)
+- [The Polymorphism of Runtime Polymorphism](https://twitter.com/girishnayak12/status/790816806919401472)
 
 
 *If you found this post helpful, or you have more thoughts on this subject, please leave a message in the comments.*
