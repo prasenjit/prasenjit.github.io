@@ -1,18 +1,18 @@
 # Site settings
-title: Video Cortex
-description: 'Insights and Visions'
+title: Illusionist
+description: 'Entrepreneur | Interest in future technologies | Atheist | Founder of AI blogging platform'
 url: 'https://girishnayak12.github.io'
 baseurl: 
 #google_analytics: 'UA-86671472-1'
 #disqus_shortname: 'video-cortex'
 
 author:
-  name: 'Adi Shavit'
+  name: 'Girish Nayak'
   #email: josh@joshgerdes.com
-  twitter_username: girishnayak12
+  twitter_username: gireeshnayak
   #facebook_username: joshgerdes
   github_username:  girishnayak12
-  linkedin_username:  girishnayak12
+  linkedin_username:  in/girishnayak12
 
 defaults:
   -
