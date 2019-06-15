@@ -20,7 +20,8 @@ Ok, coming back to the point. My GSoC project is to incorporate the feature of s
 
 The first one was something that was done in the first week of the coding period. Its the second one that took a long time. It took me a long time to understand how communication between C++/Qt and HTML happens using QtWebChannel. But at last, its done. I have been able to setup the webchannel and recieve the initial login credentials.
 
-What follows next is processing the initial login keys. It involves using HKDF algorithm using HMAC_SHA256. Falkon uses the OpenSSL library for some of its operation. And OpenSSL provides the HKDF algorithm, but HMAC_SHA256 is something thats not available. HMAC and SHA256 are present independently. Lets see how long it takes. Sigh!
+What follows next is processing the initial login keys. It involves using HKDF algorithm using HMAC_SHA256. Falkon uses the OpenSSL library for some of its operation. And OpenSSL provides the HKDF algorithm, but HMAC_SHA256 is something thats not available. HMAC and SHA256 are present independently. Lets see how long it takes to implement HKDF using HMAC_SHA256. Sigh!
+Also, I need to implement HAWK requests, as it is the form of requests, that is to be used for further communication with the server.
 
 The journey so far has been hectic but interesting. And if not for my mentor and members of the #falkon irc channel, it would have been much more harder. My mentor David Rosca and user #SGOrava on channel #falkon on IRC have been really helpful.
 
